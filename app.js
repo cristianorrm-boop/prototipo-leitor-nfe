@@ -68,7 +68,14 @@ document.getElementById("btn-iniciar").addEventListener("click", async () => {
   try {
     await leitor.start(
       { facingMode: "environment" },
-      { fps: 10, qrbox: 240 },
+      {
+        fps: 10,
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+          const tamanho = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.7);
+          return { width: tamanho, height: tamanho };
+        },
+        formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+      },
       aoLer,
       () => {}
     );
